@@ -1,11 +1,13 @@
-const fs = require("fs")
-
+const fs = require("fs");
+const nanoid = require("nanoid");
 
 const racas = require("./racas");
 const { nomesMasculinos, nomesFemininos } = require("./nomes");
 const donos = require("./donos");
+
 const FEMEA = "fêmea";
 const MACHO = "macho";
+const QUANTIDADE = 20;
 
 function gerarDataAleatoria(start, end) {
   return new Date(
@@ -31,6 +33,7 @@ gerarCachorro = () => {
   const dataDeNascimento = gerarDataAleatoria(new Date(2011, 0, 1), new Date());
 
   const infoPadrao = {
+    id: nanoid(),
     raca: racas[Math.floor(Math.random() * racas.length)],
     dataDeNascimento,
     dono: {
@@ -56,7 +59,7 @@ gerarCachorro = () => {
 };
 fs.writeFile(
   "dogs.json",
-  JSON.stringify(new Array(1000).fill(0).map(gerarCachorro)),
+  JSON.stringify(new Array(QUANTIDADE).fill(0).map(gerarCachorro)),
   function(err) {
     if (err) {
       return console.log(err);
