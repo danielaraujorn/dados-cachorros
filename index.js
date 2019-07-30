@@ -38,7 +38,8 @@ gerarCachorro = () => {
     dataDeNascimento,
     dono: {
       nome: donos[Math.floor(Math.random() * donos.length)],
-      telefone: gerarTelefone()
+      telefone: gerarTelefone(),
+      castrado: Math.random() >= 0.42
     },
     dataDoUltimoAtendimento: gerarDataAleatoria(dataDeNascimento, new Date())
   };
@@ -46,15 +47,13 @@ gerarCachorro = () => {
     return {
       ...infoPadrao,
       genero: FEMEA,
-      nome: nomesFemininos[Math.floor(Math.random() * nomesFemininos.length)],
-      castrado: false
+      nome: nomesFemininos[Math.floor(Math.random() * nomesFemininos.length)]
     };
   else
     return {
       ...infoPadrao,
       genero: MACHO,
-      nome: nomesMasculinos[Math.floor(Math.random() * nomesMasculinos.length)],
-      castrado: Math.random() >= 0.42
+      nome: nomesMasculinos[Math.floor(Math.random() * nomesMasculinos.length)]
     };
 };
 fs.writeFile(
