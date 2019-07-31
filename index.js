@@ -15,11 +15,12 @@ function generateRandomDate(start, end) {
   );
 }
 
-phoneNumbers = [];
+phoneNumbers = {};
 
 generatePhoneNumber = () => {
   const start = Math.random() >= 0.5 ? 980000000 : 990000000;
-  const phoneNumber = Math.floor(start + Math.random() * 10000000);
+  const phoneNumber =
+    51000000000 + Math.floor(start + Math.random() * 10000000);
   if (!!phoneNumbers[phoneNumber]) {
     const NewPhoneNumber = generatePhoneNumber();
     return NewPhoneNumber;
@@ -32,16 +33,21 @@ generatePhoneNumber = () => {
 generateDog = () => {
   const dateOfBirth = generateRandomDate(new Date(2011, 0, 1), new Date());
 
+  const { name: raceName, picture } = races[
+    Math.floor(Math.random() * races.length)
+  ];
+
   const defaultInfo = {
     id: nanoid(),
-    race: races[Math.floor(Math.random() * races.length)],
+    race: raceName,
+    picture,
     dateOfBirth,
     owner: {
       name: owners[Math.floor(Math.random() * owners.length)],
-      telefone: generatePhoneNumber()
+      phoneNumber: generatePhoneNumber()
     },
     dateOfLastService: generateRandomDate(dateOfBirth, new Date()),
-    castrado: Math.random() >= 0.42
+    castrated: Math.random() >= 0.42
   };
   if (Math.random() >= 0.5)
     return {
@@ -56,9 +62,18 @@ generateDog = () => {
       name: maleNames[Math.floor(Math.random() * maleNames.length)]
     };
 };
+
+const orderDate = (prev, next) =>
+  prev.dateOfLastService.getTime() > next.dateOfLastService.getTime() ? -1 : 1;
+
 fs.writeFile(
   "dogs.json",
-  JSON.stringify(new Array(AMOUNT).fill(0).map(generateDog)),
+  JSON.stringify(
+    new Array(AMOUNT)
+      .fill(0)
+      .map(generateDog)
+      .sort(orderDate)
+  ),
   function(err) {
     if (err) {
       return console.log(err);
