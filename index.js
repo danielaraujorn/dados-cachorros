@@ -1,64 +1,64 @@
 const fs = require("fs");
 const nanoid = require("nanoid");
 
-const racas = require("./racas");
-const { nomesMasculinos, nomesFemininos } = require("./nomes");
-const donos = require("./donos");
+const races = require("./races");
+const { maleNames, femaleNames } = require("./names");
+const owners = require("./owners");
 
-const FEMEA = "fêmea";
-const MACHO = "macho";
-const QUANTIDADE = 20;
+const FEMALE = "fêmea";
+const MALE = "macho";
+const AMOUNT = 1000;
 
-function gerarDataAleatoria(start, end) {
+function generateRandomDate(start, end) {
   return new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 }
 
-telefones = [];
+phoneNumbers = [];
 
-gerarTelefone = () => {
-  const inicio = Math.random() >= 0.5 ? 980000000 : 990000000;
-  const telefone = Math.floor(inicio + Math.random() * 10000000);
-  if (!!telefones[telefone]) {
-    const novoTelefone = gerarTelefone();
-    return novoTelefone;
+generatePhoneNumber = () => {
+  const start = Math.random() >= 0.5 ? 980000000 : 990000000;
+  const phoneNumber = Math.floor(start + Math.random() * 10000000);
+  if (!!phoneNumbers[phoneNumber]) {
+    const NewPhoneNumber = generatePhoneNumber();
+    return NewPhoneNumber;
   } else {
-    telefones[telefone] = true;
-    return telefone;
+    phoneNumbers[phoneNumber] = true;
+    return phoneNumber;
   }
 };
 
-gerarCachorro = () => {
-  const dataDeNascimento = gerarDataAleatoria(new Date(2011, 0, 1), new Date());
+generateDog = () => {
+  const dateOfBirth = generateRandomDate(new Date(2011, 0, 1), new Date());
 
-  const infoPadrao = {
+  const defaultInfo = {
     id: nanoid(),
-    raca: racas[Math.floor(Math.random() * racas.length)],
-    dataDeNascimento,
-    dono: {
-      nome: donos[Math.floor(Math.random() * donos.length)],
-      telefone: gerarTelefone(),
-      castrado: Math.random() >= 0.42
+    race: races[Math.floor(Math.random() * races.length)],
+    dateOfBirth,
+    owner: {
+      name: owners[Math.floor(Math.random() * owners.length)],
+      telefone: generatePhoneNumber()
     },
-    dataDoUltimoAtendimento: gerarDataAleatoria(dataDeNascimento, new Date())
+    dateOfLastService: generateRandomDate(dateOfBirth, new Date()),
+    castrado: Math.random() >= 0.42
   };
   if (Math.random() >= 0.5)
     return {
-      ...infoPadrao,
-      genero: FEMEA,
-      nome: nomesFemininos[Math.floor(Math.random() * nomesFemininos.length)]
+      ...defaultInfo,
+      gender: FEMALE,
+      name: femaleNames[Math.floor(Math.random() * femaleNames.length)]
     };
   else
     return {
-      ...infoPadrao,
-      genero: MACHO,
-      nome: nomesMasculinos[Math.floor(Math.random() * nomesMasculinos.length)]
+      ...defaultInfo,
+      gender: MALE,
+      name: maleNames[Math.floor(Math.random() * maleNames.length)]
     };
 };
 fs.writeFile(
   "dogs.json",
-  JSON.stringify(new Array(QUANTIDADE).fill(0).map(gerarCachorro)),
+  JSON.stringify(new Array(AMOUNT).fill(0).map(generateDog)),
   function(err) {
     if (err) {
       return console.log(err);
@@ -67,5 +67,3 @@ fs.writeFile(
     console.log("The file was saved!");
   }
 );
-
-// console.log(racas[0], nomesFemininos[0], nomesMasculinos[0]);

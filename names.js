@@ -1,4 +1,4 @@
-exports.nomesMasculinos = [
+exports.maleNames = [
   "Thor",
   "Zeus",
   "Floquinho",
@@ -201,7 +201,7 @@ exports.nomesMasculinos = [
   "Blue"
 ];
 
-exports.nomesFemininos = [
+exports.femaleNames = [
   "Mel",
   "Lili",
   "Chloé",

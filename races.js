@@ -1,4 +1,4 @@
-const racas = [
+const races = [
   "Afegão",
   "Affenpinscher",
   "Airedale Terrier",
@@ -135,4 +135,4 @@ const racas = [
   "Yorkshire Terrier"
 ];
 
-module.exports = racas;
+module.exports = races;

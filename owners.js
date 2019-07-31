@@ -1,4 +1,4 @@
-const donos = [
+const owners = [
   "Alice",
   "Miguel",
   "Sophia",
@@ -204,4 +204,4 @@ const donos = [
   "Oliver"
 ];
 
-module.exports = donos;
+module.exports = owners;
